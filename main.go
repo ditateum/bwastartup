@@ -28,15 +28,12 @@ func main() {
 	userRepository := user.NewRepository(db)
 	campaignRepository := campaign.NewRepository(db)
 
-	campaigns, err := campaignRepository.FindByUserID(1)
-
-	fmt.Println("Debug")
-	fmt.Println("Debug")
-	fmt.Println("Debug")
-	fmt.Println(len(campaigns))
-
 	userService := user.NewService(userRepository)
 	authService := auth.NewJwtService()
+	campaignService := campaign.NewService(campaignRepository)
+
+	campaigns, _ := campaignService.FindCampaigns(8)
+	fmt.Println(len(campaigns))
 
 	userHandler := handler.NewUserHandler(userService, authService)
 
